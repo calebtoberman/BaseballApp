@@ -1,0 +1,41 @@
+﻿@page "/"
+
+<h1>Baseball Stats</h1>
+
+@inject NavigationManager Navigation
+
+@code {
+    private void goToPage()
+    {
+        Navigation.NavigateTo("/counter");
+    }
+}
+
+<button @onclick="goToPage"> Go to Counter Page! </button>
+
+<h3>Simple Calculator</h3>
+
+<input type="text" @bind="userInput" placeholder="Enter equation" />
+<button @onclick="Calculate">Compute</button>
+@if (!string.IsNullOrEmpty(answer))
+{
+    <p>Answer: @answer</p>
+}
+
+@code {
+    private string userInput = string.Empty;
+    private string answer = string.Empty;
+    private void Calculate()
+    {
+        try
+        {
+            var dataTable = new System.Data.DataTable();
+            var value = dataTable.Compute(userInput, string.Empty);
+            answer = value.ToString();
+        }
+        catch (Exception)
+        {
+            answer = "Could not compute.";
+        }
+    }
+}

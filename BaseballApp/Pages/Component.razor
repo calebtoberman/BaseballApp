@@ -1,0 +1,42 @@
+﻿@page "/StatLookup"
+
+<h1>Stat Lookup</h1>
+
+<h3>Enter Player Name and Stat</h3>
+
+<input type="text" @bind="userInput" placeholder="RIGHT HERE" />
+<button @onclick="Lookup">Lookup</button>
+<button @onclick="ClearInput">Clear</button>
+
+@if (!string.IsNullOrEmpty(answer))
+{
+    <p>Answer: @answer</p>
+}
+
+@code {
+    private string userInput = string.Empty;
+    private string answer = string.Empty;
+
+    private readonly Dictionary<string, string> playerStats = new()
+    {
+        { "Mark McGwire Home Runs", "Mark McGwire had 583 home runs!" }
+    };
+
+    private void Lookup()
+    {
+        if (playerStats.TryGetValue(userInput, out var result))
+        {
+            answer = result;
+        }
+        else
+        {
+            answer = "That one's too hard for me. Try 'Mark McGwire Home Runs'";
+        }
+    }
+
+    private void ClearInput()
+    {
+        userInput = string.Empty;
+        answer = string.Empty;
+    }
+}
